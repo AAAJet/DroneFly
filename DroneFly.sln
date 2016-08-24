@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{72B4E16E-BF3F-256A-0A59-A05694A279AA}") = "DroneFly", "Assembly-CSharp.csproj", "{3BF7141F-1067-A4C4-E613-8706141B96AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BF7141F-1067-A4C4-E613-8706141B96AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BF7141F-1067-A4C4-E613-8706141B96AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BF7141F-1067-A4C4-E613-8706141B96AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BF7141F-1067-A4C4-E613-8706141B96AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

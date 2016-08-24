@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{9435121F-05D4-850E-33EA-1F8C894862CB}</ProjectGuid>
+    <ProjectGuid>{3BF7141F-1067-A4C4-E613-8706141B96AD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -50,6 +50,8 @@
      <Compile Include="Assets\Scripts\DroneBehaviour.cs" />
      <Compile Include="Assets\Scripts\ForestBehaviour.cs" />
      <Compile Include="Assets\Scripts\MenuBehaviour.cs" />
+     <Compile Include="Assets\Scripts\PlayerFollow.cs" />
+     <Compile Include="Assets\Scripts\ProgressManager.cs" />
      <Compile Include="Assets\Scripts\RoadBehaviour.cs" />
      <Compile Include="Assets\Scripts\UrbanBehaviour.cs" />
  <Reference Include="UnityEngine.UI">

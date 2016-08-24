@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ForestBehaviour : MonoBehaviour {
+	public enum BACKGROUND_POS {LOWER_LEFT, LOWER_CENTER, LOWER_RIGHT, LEFT, CENTER, RIGHT, UPPER_LEFT, UPPER_CENTER, UPPER_RIGHT};
+	public BACKGROUND_POS currPos;
+
 	public DroneBehaviour player;
 
 	public GameObject tree1;
@@ -10,23 +13,35 @@ public class ForestBehaviour : MonoBehaviour {
 	public GameObject rock1;
 	public GameObject rock2;
 
-	private int rocksMaxCount = 20;
-	private int treesMaxCount = 10;
+	private List <GameObject> backgroundObjects = new List<GameObject> ();
+
+	private int rocksMaxCount = 30;
+	private int treesMaxCount = 15;
 
 	private float diffMultiplier = 0.5f;
 
-	private float minY;
-	private float maxY;
+	private Collider2D levelBoundsCollider;
+	private Collider2D startingBoundsCollider;
+
+	private ProgressManager progressManager;
+
+	void Awake ()
+	{
+		levelBoundsCollider = GetComponent<Collider2D> ();
+		startingBoundsCollider = player.transform.Find ("startingBounds").GetComponent<Collider2D>();
+		progressManager = GameObject.FindGameObjectWithTag ("ProgressManager").GetComponent("ProgressManager") as ProgressManager;
+	}
 
 	// Use this for initialization
-	void Start () {
+	void OnEnable () {
 		diffMultiplier *= PlayerPrefs.GetInt ("playerDiff");
 		treesMaxCount = treesMaxCount + (int)(treesMaxCount * diffMultiplier);
 
-		minY = -8.0f;
-		maxY = Camera.main.ScreenToWorldPoint (new Vector3 (0, Screen.height, 0)).y;
-
-		GenerateForest ();
+		if (backgroundObjects.Count > 0) {
+			ChangeForest ();
+		} else {
+			GenerateForest ();
+		}
 
 		if (player) {
 			player.SetPlayerScore (PlayerPrefs.GetInt ("lastScore"));
@@ -40,43 +55,46 @@ public class ForestBehaviour : MonoBehaviour {
 
 		for (int i = 0; i <= rocksCount; i++) {
 			if (i % 2 == 0) {
-				Instantiate (rock1, GetRandomPos(), Quaternion.identity);
+				backgroundObjects.Add(Instantiate (rock1, GetRandomPos(), Quaternion.identity, transform) as GameObject);
 			} else {
-				Instantiate (rock2, GetRandomPos(), Quaternion.identity);
+				backgroundObjects.Add(Instantiate (rock2, GetRandomPos(), Quaternion.identity, transform) as GameObject);
 			}
 		}
 
 		for (int i = 0; i <= treesCount; i++) {
 			if (i % 2 == 0) {
-				Instantiate (tree1, GetRandomPos (), Quaternion.identity);
+				backgroundObjects.Add(Instantiate (tree1, GetRandomPos (), Quaternion.identity, transform) as GameObject);
 			} else {
-				Instantiate (tree2, GetRandomPos (), Quaternion.identity);
+				backgroundObjects.Add(Instantiate (tree2, GetRandomPos (), Quaternion.identity, transform) as GameObject);
 			}
+		}
+	}
+
+	private void ChangeForest()
+	{
+		foreach (GameObject go in backgroundObjects)
+		{
+			go.transform.position = GetRandomPos ();
 		}
 	}
 
 	private Vector3 GetRandomPos()
 	{
-		Vector3 randomPos = Camera.main.ScreenToWorldPoint (new Vector3 (Random.Range (0, Screen.width), 0, Camera.main.farClipPlane / 2));
-		randomPos.y = Random.Range (minY, maxY + 1);
+		Vector3 randomPos = startingBoundsCollider.bounds.center;
+
+		while (startingBoundsCollider.bounds.Contains(randomPos))
+		{
+			randomPos = new Vector3 (Random.Range (levelBoundsCollider.bounds.min.x, levelBoundsCollider.bounds.max.x)
+				, Random.Range (levelBoundsCollider.bounds.min.y, levelBoundsCollider.bounds.max.y)
+				, 0);
+		}
+
 		return randomPos;
 	}
 
-	// Update is called once per frame
-	void Update () {
-		if (player && player.IsCrashed ()) {
-			StartCoroutine (WaitAndStartNextLevel(2.0f));
+	void OnTriggerEnter2D(Collider2D coll) {
+		if (!currPos.Equals (BACKGROUND_POS.CENTER)) {
+			progressManager.OnNewBackgroundEntered (this);
 		}
-
-		if (player && player.GetPlayerScore () >= 60) {
-			PlayerPrefs.SetInt ("lastScore", player.GetPlayerScore());
-			SceneManager.LoadScene ("Level3");
-		}
-	}
-
-	IEnumerator WaitAndStartNextLevel(float waitTime) {
-		yield return new WaitForSeconds(waitTime);
-		PlayerPrefs.SetInt ("lastScore", player.GetPlayerScore());
-		SceneManager.LoadScene ("BestScore");
 	}
 }

@@ -19,6 +19,10 @@ public class DroneBehaviour : MonoBehaviour
 		rigidBody = GetComponent<Rigidbody2D> ();
 		scoreTxt = GameObject.FindGameObjectWithTag ("Score").GetComponent<Text>();
 		diffMultiplier *= PlayerPrefs.GetInt ("playerDiff");
+
+		if (Application.isEditor) {
+			GetComponent<BoxCollider2D> ().isTrigger = true;
+		}
 	}
 	
 	// Update is called once per frame
@@ -42,6 +46,12 @@ public class DroneBehaviour : MonoBehaviour
 	}
 
 	void FixedUpdate(){
+		if (Application.isEditor) {
+			Vector2 force = new Vector2 (0.5f, 0);
+			rigidBody.AddForce (force * 10);
+			return;
+		}
+
 		if (!isCrashed) {
 			Vector2 force = new Vector2 (Input.acceleration.x, Input.acceleration.y);
 			rigidBody.AddForce (force * 10);
@@ -53,6 +63,10 @@ public class DroneBehaviour : MonoBehaviour
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
+		if (Application.isEditor) {
+			return;
+		}
+
 		if (!isCrashed && coll.gameObject.tag.Equals("Obstacle")) {
 			GetComponent<ParticleSystem> ().Play ();
 			isCrashed = true;

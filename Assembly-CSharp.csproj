@@ -38,27 +38,28 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>L:/Unity5.4.0f3/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>L:/Unity5.4.0f3/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\BestScoresBehaviour.cs" />
-     <Compile Include="Assets\Scripts\CarBehaviour.cs" />
-     <Compile Include="Assets\Scripts\DroneBehaviour.cs" />
-     <Compile Include="Assets\Scripts\ForestBehaviour.cs" />
-     <Compile Include="Assets\Scripts\MenuBehaviour.cs" />
      <Compile Include="Assets\Scripts\PlayerFollow.cs" />
      <Compile Include="Assets\Scripts\ProgressManager.cs" />
-     <Compile Include="Assets\Scripts\RoadBehaviour.cs" />
-     <Compile Include="Assets\Scripts\UrbanBehaviour.cs" />
+     <Compile Include="Assets\Scripts\environment\CarBehaviour.cs" />
+     <Compile Include="Assets\Scripts\environment\DroneBehaviour.cs" />
+     <Compile Include="Assets\Scripts\levels\BaseLevelBehaviour.cs" />
+     <Compile Include="Assets\Scripts\levels\BestScoresBehaviour.cs" />
+     <Compile Include="Assets\Scripts\levels\ForestBehaviour.cs" />
+     <Compile Include="Assets\Scripts\levels\MenuBehaviour.cs" />
+     <Compile Include="Assets\Scripts\levels\RoadBehaviour.cs" />
+     <Compile Include="Assets\Scripts\levels\UrbanBehaviour.cs" />
  <Reference Include="UnityEngine.UI">
- <HintPath>L:/Unity5.4.0f3/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
- <HintPath>L:/Unity5.4.0f3/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -21,8 +21,17 @@ public class CarBehaviour : MonoBehaviour {
 	public void ModifyCarPosRuntime (Vector3 posMidifier)
 	{
 		transform.position = transform.position - posMidifier;
-		randomEndPos.x = randomEndPos.x + posMidifier.x;
 		randomEndPos.y = randomEndPos.y - posMidifier.y;
+
+		if (randomEndPos.x > 0 && posMidifier.x > 0) {
+			randomEndPos.x = randomEndPos.x + posMidifier.x;
+		} else if (randomEndPos.x > 0 && posMidifier.x < 0) {
+			randomEndPos.x = randomEndPos.x - posMidifier.x;
+		} else if (randomEndPos.x < 0 && posMidifier.x > 0) {
+			randomEndPos.x = randomEndPos.x - posMidifier.x;
+		} else {
+			randomEndPos.x = randomEndPos.x + posMidifier.x;
+		}
 	}
 
 	void OnEnable ()

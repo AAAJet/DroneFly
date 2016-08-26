@@ -157,6 +157,7 @@ public class ProgressManager : MonoBehaviour {
 		}
 
 		if (player && player.GetPlayerScore () >= maxLevelPoints) {
+			UrbanBehaviour.isCarsStarted = false;
 			PlayerPrefs.SetInt ("lastScore", player.GetPlayerScore());
 			SceneManager.LoadScene (nextLevelName);
 		}

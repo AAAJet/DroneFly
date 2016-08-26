@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class RoadBehaviour : MonoBehaviour {
 	public DroneBehaviour player;
 
-	public GameObject car1;
-	public GameObject car2;
-	public GameObject car3;
+	public List<GameObject> cars = new List<GameObject> ();
 
 	private float diffMultiplier = 0.5f;
 	private float carWaitTime = 2.0f;
+
+	private int prevRandCarIndex = -1;
 
 	// Use this for initialization
 	void Start () {
@@ -18,6 +19,8 @@ public class RoadBehaviour : MonoBehaviour {
 		carWaitTime = carWaitTime - diffMultiplier;
 
 		StartCoroutine (StartRandomCar());
+
+		//player.SetPlayerScore (30);
 	}
 	
 	// Update is called once per frame
@@ -38,29 +41,39 @@ public class RoadBehaviour : MonoBehaviour {
 		SceneManager.LoadScene ("BestScore");
 	}
 
+	private GameObject GetRandomCar()
+	{
+		GameObject res = null;
+
+		int rand = Random.Range (0, cars.Count);
+
+		while (prevRandCarIndex == rand) {
+			rand = Random.Range (0, cars.Count);
+		}
+
+		if (!cars [rand].activeInHierarchy) {
+			res = cars [rand];
+		}
+
+		prevRandCarIndex = rand;
+
+		return res;
+	}
+
 	IEnumerator StartRandomCar()
 	{
 		while (!player.IsCrashed ()) {
 			yield return new WaitForSeconds (carWaitTime);
 
 			if (!player.IsCrashed ()) {
-				int i = Random.Range (1, 3+1);
+				GameObject newCar = GetRandomCar ();
 
-				if (i == 1 && !car1.activeInHierarchy) {
-					car1.SetActive (true);
-				} else {
-					i = 2;
+				while (newCar == null) {
+					yield return new WaitForSeconds (0.1f);
+					newCar = GetRandomCar ();
 				}
 
-				if (i == 2 && !car2.activeInHierarchy) {
-					car2.SetActive (true);
-				} else {
-					i = 3;
-				}
-
-				if (i == 3 && !car3.activeInHierarchy) {
-					car3.SetActive (true);
-				}
+				newCar.SetActive (true);
 			}
 		}
 	}

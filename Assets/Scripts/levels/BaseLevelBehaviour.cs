@@ -45,7 +45,7 @@ public class BaseLevelBehaviour : MonoBehaviour {
 			progressManager.EnableBackgroundsColliders ();
 	}
 
-	public void ChangePosition(Vector3 centerPos, Vector3 centerSize, BACKGROUND_POS newPosition, bool mutateObstacles)
+	public virtual void ChangePosition(Vector3 centerPos, Vector3 centerSize, BACKGROUND_POS newPosition, bool mutateObstacles)
 	{
 		currPos = newPosition;
 
@@ -92,6 +92,11 @@ public class BaseLevelBehaviour : MonoBehaviour {
 	}
 
 	protected virtual Vector3 GetRandomObstaclePos()
+	{
+		return new Vector3();
+	}
+
+	protected virtual Vector3 GetRandomObstaclePos(BoxCollider2D spawnArea)
 	{
 		return new Vector3();
 	}

@@ -23,6 +23,8 @@ public class ForestBehaviour : BaseLevelBehaviour {
 		if (player) {
 			player.SetPlayerScore (PlayerPrefs.GetInt ("lastScore"));
 		}
+
+		//player.SetPlayerScore (60);
 	}
 
 	protected override void GenerateObstacles()
